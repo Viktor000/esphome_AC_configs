@@ -1,0 +1,108 @@
+external_components:
+  - source: github://GrKoR/esphome_aux_ac_component
+    components: [ aux_ac ]
+    refresh: 0s
+    
+substitutions:
+  uart_baud_rate: "4800"
+  uart_parity: "EVEN"
+
+logger:
+    level: DEBUG
+    baud_rate: 0
+
+
+packages:
+  default: github://dudanov/esphome-packages/hardware/iot-uni-dongle/device.yaml
+
+uart:
+  id: uart8266
+  tx_pin: 1
+  rx_pin: 3
+  baud_rate: 4800
+  parity: ${uart_parity}
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: 192.168.1.252
+
+climate:
+  - platform: aux_ac
+    name: "Guestroom AC"
+    period: 7s
+    show_action: true
+    display_inverted: false
+    timeout: 150
+    indoor_temperature:
+      name: Guestroom AC Indoor Temperature
+      id: guestroom_ac_indoor_temp
+      accuracy_decimals: 1
+      internal: false
+    outdoor_temperature:
+      name: Guestroom AC Outdoor Temperature
+      id: guestroom_ac_outdoor_temp
+      internal: false
+    outbound_temperature:
+      name: Guestroom AC Coolant Outbound Temperature
+      id: guestroom_ac_outbound_temp
+      internal: false
+    inbound_temperature:
+      name: Guestroom AC Coolant Inbound Temperature
+      id: guestroom_ac_inbound_temp
+      internal: false
+    compressor_temperature:
+      name: Guestroom AC Compressor Temperature
+      id: guestroom_ac_strange_temp
+      internal: false
+    display_state:
+      name: Guestroom AC Display State
+      id: guestroom_ac_display_state
+      internal: false
+    defrost_state:
+      name: Guestroom AC Defrost State
+      id: guestroom_ac_defrost_state
+      internal: false
+    inverter_power:
+      name: Guestroom AC Inverter Power
+      id: guestroom_ac_inverter_power
+      internal: false
+    inverter_power_limit_value:
+      name: Guestroom AC Inverter Power Limit Value
+      id: guestroom_ac_inverter_power_limit_value
+      internal: false
+    inverter_power_limit_state:
+      name: Guestroom AC Inverter Power Limit State
+      id: guestroom_ac_inverter_power_limit_state
+      internal: false
+    preset_reporter:
+      name: Guestroom AC Preset Reporter
+      id: guestroom_ac_preset_reporter
+      internal: false
+    vlouver_state:
+      name: Guestroom AC Vertical Louvers State
+      id: guestroom_ac_vlouver_state
+      internal: false
+    visual:
+      min_temperature: 16
+      max_temperature: 32
+      temperature_step: 1
+    supported_modes:
+      - HEAT_COOL
+      - COOL
+      - HEAT
+      - DRY
+      - FAN_ONLY
+    custom_fan_modes:
+      - MUTE
+      - TURBO
+    supported_presets:
+      - SLEEP
+    custom_presets:
+      - CLEAN
+      - HEALTH
+      - ANTIFUNGUS
+    supported_swing_modes:
+      - VERTICAL
+      - HORIZONTAL
+      - BOTH
